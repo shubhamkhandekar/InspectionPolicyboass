@@ -60,22 +60,12 @@
       <!-- /.dropdown -->
 
 
-      <li class="dropdown" id="notifications">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          <i class="fa fa-bell fa-fw"></i> 
-          <span class="badge badge-notify" id="noti_count"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-user drop-down1">
-
           <form name="notifications" id="notify" method="POST">
             {{ csrf_field() }}
             <input type="hidden" name="roleid" value="{{ session()->get( 'role_id' ) }}">
             <input type="hidden" name="compid" value="{{ session()->get( 'company_id' ) }}">
             <input type="hidden" name="hidden_userid" value="{{ session()->get('userid') }}">
-            <a class="dropdown-item">
-              <p class="mb-0 font-weight-normal float-left">You have <span id="new_notifi_count"></span> new notifications
-              </p>
-            </a>
+           
 
             <div id='notifications_panel'>
             </div>

@@ -45,6 +45,7 @@ public function login_page(Request $request){
       $request->session()->put('user_id',$val->user_id);
       $request->session()->put('password',$val->pwd); 
       $request->session()->put('email',$val->email); 
+      $request->session()->put('role_id',$val->role_id);       
       $request->session()->put('user_name',$val->user_name);                 
       return redirect()->intended('dashboard');
     }else{

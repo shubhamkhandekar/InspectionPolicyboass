@@ -36,7 +36,7 @@ class InitialController extends Controller{
     $query=DB::table('company_master')->select('comp_icon_url')->where('comp_id','=',Session::get('company_id'))->first();
     $logo=$query->comp_icon_url;
     }else{
-     $logo='images/rb_logo.png';
+     $logo='images/pb_logo.jpg';
     }
 
        return $logo;
