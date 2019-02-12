@@ -368,6 +368,7 @@
 <script type="text/javascript">
 
  function getimgaeinfo(vehicalno){
+     alert(vehicalno);
   $("#imagemodal").modal('show');
     alert(vehicalno);
     $.ajax({ 
@@ -375,16 +376,12 @@
      dataType : 'json',
      method:"GET",
      success: function(msg)
-     {
-      //alert(msg);
-     var data = JSON.parse(msg);
-    // alert(data);
+     {      
       var str='';
-      for (var i = 0; i < data.length; i++) 
+      for (var i = 0; i < msg.length; i++) 
          {
-           str = str +"<tr><td><a>"+data[0].document_name+"</a></td></tr>"; 
+           str = str +"<tr><th><a class='btn btn-default'>"+msg[i].document_name+"</a></th></tr>"; 
          }
-
         $('#divimages').html(str);
      }
    });

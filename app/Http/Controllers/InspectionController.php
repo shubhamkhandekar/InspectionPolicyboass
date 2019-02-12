@@ -24,7 +24,7 @@ class InspectionController extends Controller
  }
  public function getvehicalimgaes($vehicalid){
  	$data=DB::select("call Vehical_images_data($vehicalid)");
- 	//print_r($data);exit();
+ 	//print_r(json_encode($data));exit();
      	return json_encode($data);
  	
  }
