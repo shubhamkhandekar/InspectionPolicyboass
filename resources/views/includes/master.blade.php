@@ -11,6 +11,11 @@
     @include('includes.head')
     
 </head>
+<style type="text/css">
+  .nav-md{
+  background: #26b99a !important;
+  }
+</style>
  
  
 <body class="nav-md">
