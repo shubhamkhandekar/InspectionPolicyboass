@@ -46,7 +46,7 @@
                   <div class="form-group row">
                     <label for="f_date" class="col-sm-4 col-form-label">Form Date:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control datepicker_id" id="master_f_date" name="master_f_date" placeholder="From Date" required readonly>
+                      <input type="text" class="form-control datepicker_id" id="master_f_date" name="master_f_date" placeholder="From Date" required readonly value="2018-02-01">
                       <label class="control-label" for="inputError"><span id="err_pass" class="error_class"></span></label>
                     </div>
                   </div>
@@ -55,7 +55,7 @@
                   <div class="form-group row">
                     <label for="to_date" class="col-sm-4 col-form-label">To Date:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control datepicker_id" id="master_to_date" name="master_to_date" placeholder="To Date"  required readonly>
+                      <input type="text" class="form-control datepicker_id" id="master_to_date" name="master_to_date" placeholder="To Date"  required readonly value="2019-02-12">
                       <label class="control-label" for="inputError"><span id="err_to_date" class="error_class"></span></label>
                     </div>
                   </div>
@@ -376,12 +376,15 @@
      method:"GET",
      success: function(msg)
      {
-      var data = JSON.parse(msg);
+      //alert(msg);
+     var data = JSON.parse(msg);
+    // alert(data);
       var str='';
       for (var i = 0; i < data.length; i++) 
          {
-           str = str +"<tr><td><a>"+data[i].document_name+"</a></td></tr>"; 
+           str = str +"<tr><td><a>"+data[0].document_name+"</a></td></tr>"; 
          }
+
         $('#divimages').html(str);
      }
    });

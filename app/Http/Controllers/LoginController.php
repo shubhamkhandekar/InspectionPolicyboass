@@ -15,50 +15,48 @@ use Mail;
 use sentinel;
 use App\CustomValidation;
 
-
 class LoginController extends Controller
 {
-    public function login(Request $request){
-
-    if(!$request->session()->exists('user_id')){
-       return view('login');
-       }
-       else{
-       return redirect('/dashboard');
-      }
+  public function login(Request $request){
+   // print_r($request()->email);exit();
+   if(!$request->session()->exists('email')){
+    return view('login');
+  }else{
+    return redirect('/dashboard');
+  }
 
 }
 
 public function login_page(Request $request){
     //print_r($request->all());exit();
   $validator = Validator::make($request->all(),[
-  'email' => 'required|max:100',
-  'password' => 'required|max:100',
+    'email' => 'required|max:100',
+    'password' => 'required|max:10',
   ]);
   if ($validator->fails()) {
     return redirect('/')
     ->withErrors($validator)
     ->withInput();
   }else{
-  $query=DB::select('call login_user(?,?)',array($request->email,$request->password)); 
-  if(!empty($query)){
-    $val=$query[0];
-    $request->session()->flush(); 
-    $request->session()->put('user_id',$val->user_id);
-    $request->session()->put('password',$val->pwd); 
-    $request->session()->put('email',$val->email); 
-    $request->session()->put('user_name',$val->user_name);                 
-    return redirect()->intended('dashboard');
-  }else{
-    Session::flash('msg', "Invalid email or password. Please Try again!");
-    return Redirect::back();
+    $query=DB::select('call login_user(?,?)',array($request->email,$request->password)); 
+    if(!empty($query)){
+      $val=$query[0];
+      $request->session()->flush(); 
+      $request->session()->put('user_id',$val->user_id);
+      $request->session()->put('password',$val->pwd); 
+      $request->session()->put('email',$val->email); 
+      $request->session()->put('user_name',$val->user_name);                 
+      return redirect()->intended('dashboard');
+    }else{
+      Session::flash('msg', "Invalid email or password. Please Try again!");
+      return Redirect::back();
     }
-   }
-    }
-  public function logout(Request $req) {
-    $req->session()->flush();
-    return redirect('/');
   }
+}
+public function logout(Request $req) {
+  $req->session()->flush();
+  return redirect('/');
+}
 //}
   //   public function login_page(Request $request){
   //    // print_r($request->all());exit();
@@ -86,7 +84,7 @@ public function login_page(Request $request){
   //             return Redirect::back();
   //           }
 
-          
+
   //    //}
   //        $this::set_session_for_user($value->user_id,$value->user_name,$value->email);
   //           $is_authenticated=1;
@@ -104,21 +102,21 @@ public function login_page(Request $request){
   //     return Redirect('/');
 
   //   }
-    
+
     // public function set_session_for_user($user_id,$user_name,$email){
     //     Session::put('user_id',$user_id);
     //     Session::put('name',$user_name);
     //     Session::put('email',$email);
     //     // Session::put('notification_count',$notification_count);
-        
-        
+
+
 
     // }
 
   //  public function forgotpassword(){
   //   return view('forgot-password');
   // }
- 
+
   // public function forgot_password(Request $request){
   //   $is_authenticated=0;
   //       $validator = Validator::make($request->all(), [
@@ -185,7 +183,7 @@ public function login_page(Request $request){
   //     'NEW_PASSWORD_FIELD_NAME'=>'new_pass',
   //     'CONFIRM_PASSWORD_FIELD_NAME'=>'conf_new_pass'
   //   );
-    
+
   //   extract($validator->set_new_password_validation($parameters)); 
   //   if(count($error) === 0){
   //     $new_pass = $parameters['REQUEST'][$parameters['VALIDATIONS']['NEW_PASSWORD_FIELD_NAME']];
@@ -200,7 +198,7 @@ public function login_page(Request $request){
   // }
 
 
- 
+
 
 }
 
