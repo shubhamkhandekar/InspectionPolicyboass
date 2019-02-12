@@ -18,7 +18,7 @@
       <div class="main_container">
             
             @include('includes.header')
-           
+           @include('includes.sidebar')
             @yield('content')
  
 
