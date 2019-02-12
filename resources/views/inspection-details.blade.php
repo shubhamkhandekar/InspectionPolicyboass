@@ -1,6 +1,6 @@
   @extends('includes.master')
   @section('content')  
-
+<script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
   <div class="right_col" role="main">
     <div class="row  class="right_col"">
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -265,9 +265,21 @@
           <h4 class="modal-title">Vehical Images</h4>
         </div>
         <div class="modal-body">
-          <div id="divimages">
-            
-          </div>
+
+          <table style="width:100%">
+            <tr>             
+              <td>
+                <div id="divimages"></div>
+              </td>
+            </tr>
+            <tr>             
+             <td>
+              <div>
+                <iframe id="divviewimg"></iframe>
+              </div>
+           </td>
+           </tr>            
+         </table>          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -368,7 +380,7 @@
 <script type="text/javascript">
 
  function getimgaeinfo(vehicalno){
-     alert(vehicalno);
+    // alert(vehicalno);
   $("#imagemodal").modal('show');
     alert(vehicalno);
     $.ajax({ 
@@ -380,11 +392,22 @@
       var str='';
       for (var i = 0; i < msg.length; i++) 
          {
-           str = str +"<tr><th><a class='btn btn-default'>"+msg[i].document_name+"</a></th></tr>"; 
+          $path= "showimage('"+msg[i].doc_path+"')";
+          //alert($path);
+           str = str +'<tr><td><a href="#" class="btn btn-default" onclick='+$path+'>'+msg[i].document_name+'</a></td></tr>'; 
          }
         $('#divimages').html(str);
      }
    });
+  }
+
+</script>
+<script type="text/javascript">
+  function showimage(doc_path){
+    alert('test');
+    alert(doc_path);
+   // alert('{{url("'+doc_path+'")}}');
+  $("#divviewimg").attr("src",'http://localhost:8000/'+doc_path);
   }
 </script>
 @endsection
