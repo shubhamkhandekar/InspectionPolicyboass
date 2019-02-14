@@ -1,6 +1,9 @@
   @extends('includes.master')
   @section('content')  
 <script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
+<style type="text/css">
+  img{width:500px  ! important;}
+</style>
   <div class="right_col" role="main">
     <div class="row  class="right_col"">
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -258,7 +261,7 @@
 </div>
  <!-- Modal -->
   <div class="modal fade" id="imagemodal" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="width: 1095px;">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -274,8 +277,8 @@
             </tr>
             <tr>             
              <td>
-              <div>
-                <iframe id="divviewimg"></iframe>
+              <div style="height: 500px;">
+                <iframe id="divviewimg" style="height: 100%;width: 100%;"></iframe>
               </div>
            </td>
            </tr>            
@@ -366,7 +369,7 @@
          var str ="<table id='datatable'class='table table-striped table-bordered'><thead><tr><th>Evaluate</th><th>Vehicle No</th><th>Photo</th><th>Video</th><th>Created Date</th></tr><thead><tbody>";
          for (var i = 0; i < data.length; i++) 
          {
-           str = str + "<tr><td><a href='#'>Evaluate</a></td><td>"+data[i].vehicle_no+"</td><td><a href='#' onclick='getimgaeinfo("+data[i].vehicle_id+")'>Photo</a></td><td><a href='#'>Video</a></td><td>"+data[i].created_at+"</td></tr>"; 
+           str = str + "<tr><td><a href='#'>Evaluate</a></td><td>"+data[i].vehicle_no+"</td><td><a href='#' onclick='getimgaeinfo("+data[i].vehicle_id+")'>Photo</a></td><td><a href='#' onclick='getvideoinfo("+data[i].vehicle_id+")'>Video</a></td><td>"+data[i].created_at+"</td></tr>"; 
          }
          str = str + "</tbody></table>";
          $('#divhistory').html(str);
@@ -378,7 +381,6 @@
 
 </script>
 <script type="text/javascript">
-
  function getimgaeinfo(vehicalno){
     // alert(vehicalno);
   $("#imagemodal").modal('show');
@@ -389,25 +391,64 @@
      method:"GET",
      success: function(msg)
      {      
-      var str='';
+       if (msg.length>0) {
+       $("#imagemodal").modal('show');
+       $('#divimages').empty();
+       $("#divviewimg").attr("src",'');
+        var str='';
       for (var i = 0; i < msg.length; i++) 
          {
           $path= "showimage('"+msg[i].doc_path+"')";
           //alert($path);
-           str = str +'<tr><td><a href="#" class="btn btn-default" onclick='+$path+'>'+msg[i].document_name+'</a></td></tr>'; 
+           str = str +'<td><a href="#" class="btn btn-default" onclick='+$path+'>'+msg[i].document_name+'</a></td>'; 
          }
         $('#divimages').html(str);
+      }else{
+        alert('No Document Found');
+      }
      }
    });
   }
-
 </script>
 <script type="text/javascript">
-  function showimage(doc_path){
-    alert('test');
-    alert(doc_path);
-   // alert('{{url("'+doc_path+'")}}');
-  $("#divviewimg").attr("src",'http://localhost:8000/'+doc_path);
+  function showimage(doc_path){      
+    if (doc_path!='') {
+       /* $("#divviewimg").attr("target",'_blank');
+        $("#divviewimg").attr("herf",'http://localhost:8000/'+doc_path);*/
+        $("#divviewimg").attr("src",'http://localhost:8000/'+doc_path);     
+
+    }else{
+      alert('There is no Document has been uploaded')
+    }
+  }
+   function getvideoinfo(vehicalno){
+    // alert(vehicalno);
+ 
+    alert(vehicalno);
+    $.ajax({ 
+     url: 'get_vehical_video/'+vehicalno,
+     dataType : 'json',
+     method:"GET",
+     success: function(msg)
+     {     
+
+      if (msg.length>0) {
+        $("#imagemodal").modal('show');
+        $('#divimages').empty();
+        $("#divviewimg").attr("src",'');
+        var str='';
+        for (var i = 0; i < msg.length; i++) 
+        {
+          $path= "showimage('"+msg[i].doc_path+"')";
+          //alert($path);          
+          str = str +'<td><a href="#" class="btn btn-default" onclick='+$path+'>'+msg[i].document_name+'</a></td>';          
+        }             
+        $('#divimages').html(str);
+      }else{
+        alert('No Document Found');
+      }
+    }
+   });
   }
 </script>
 @endsection

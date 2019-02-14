@@ -28,4 +28,9 @@ class InspectionController extends Controller
      	return json_encode($data);
  	
  }
+ public function getvehicalvideo($vehicalid){
+ 	$data=DB::select("call Vehical_video_data($vehicalid)");
+ 	//print_r(json_encode($data));exit();
+     	return json_encode($data); 
+ }
 }
